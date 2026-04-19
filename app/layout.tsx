@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "@/redux/store";
 import '@/css/navbar.css';
 import '@/css/homePage.css';
+import '@/css/ideaCard.css'
 
 const metadata: Metadata = {
   title: "Create Next App",

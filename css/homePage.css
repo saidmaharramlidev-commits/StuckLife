@@ -12,6 +12,138 @@
 .home-intro-text {
     color: white;
     margin-top: 100px;
-    z-index: 2;
     font-size: 2.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+.home-intro-text-small {
+    color: gray;
+    margin-top: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+.home-main-cta {
+    margin-top: 75px;
+    padding: 16px 65px;
+    /* bigger */
+    background: linear-gradient(90deg, #2b0a7a 0%, #4c1dff 50%, #6a3cff 100%);
+    color: white;
+    border-radius: 28px;
+    font-weight: 700;
+    /* bolder */
+    font-size: 18px;
+    /* larger text */
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 22px rgba(76, 29, 255, 0.4);
+}
+
+.home-main-cta:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 14px 35px rgba(106, 60, 255, 0.55);
+    background: linear-gradient(90deg, #3b14a3, #5a2bff, #7a4dff);
+}
+
+.home-main-cta.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+    background: linear-gradient(90deg, #444, #666);
+    box-shadow: none;
+    transform: none;
+}
+
+.click-left-span {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #b9a7ff;
+}
+
+
+#three-element-wrapper {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    gap: 40px;
+}
+
+.element-home {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-align: center;
+}
+
+.icon-element {
+    font-size: 1.8rem;
+}
+
+.element-home p {
+    font-size: 0.9rem;
+    color: #b9a7ff;
+}
+
+
+@media(max-width: 700px) {
+    #center-content-home {
+        width: 90%;
+    }
+
+    .home-intro-text {
+        font-size: 2rem;
+    }
+
+    #three-element-wrapper {
+        margin-top: 120px;
+    }
+
+
+
+
+}
+
+@media(max-width:600px) {
+    #three-element-wrapper {
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 90px;
+        padding-bottom: 50px;
+    }
+
+    .home-intro-text {
+        font-size: 1.7rem;
+    }
+
+    .home-intro-text-small {
+        font-size: 0.9rem;
+    }
+}
+
+@media(max-width: 400px) {
+    .home-intro-text {
+        font-size: 1.4rem;
+    }
+
+    .home-intro-text-small {
+        font-size: 0.8rem;
+    }
+
+    .home-main-cta {
+        padding: 12px 50px;
+        font-size: 16px;
+    }
+
+
 }
