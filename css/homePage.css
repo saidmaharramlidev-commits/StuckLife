@@ -1,0 +1,17 @@
+#center-content-home {
+    width: 70%;
+    height: auto;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.home-intro-text {
+    color: white;
+    margin-top: 100px;
+    z-index: 2;
+    font-size: 2.5rem;
+}
