@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Navbar from "@/components/Navbar"
-import Link from "next/link"
 import { FcIdea } from "react-icons/fc";
 import { BsLightningChargeFill } from "react-icons/bs";
 import { GoGoal } from "react-icons/go";
@@ -31,23 +30,17 @@ export default function Home() {
   }, [])
 
   const handleClick = (e: any) => {
+    e.preventDefault()
 
+    let count = Number(localStorage.getItem("clickCount") || "0")
 
-    const count = Number(localStorage.getItem("clickCount") || "0")
+    if (count >= 3) return
 
-    if (count >= 3) {
-      e.preventDefault() // stop navigation
-      return
-    }
+    count += 1
 
-    const newCount = count + 1
-    localStorage.setItem("clickCount", newCount.toString())
-    dispatch(setClicksLeft(3 - newCount))
-
+    localStorage.setItem("clickCount", count.toString())
+    dispatch(setClicksLeft(3 - count))
     dispatch(setStep("card"))
-
-
-
   }
 
   const isDisabled = clicksLeft <= 0

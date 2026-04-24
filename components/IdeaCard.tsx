@@ -9,6 +9,7 @@ import { setClicksLeft } from "@/redux/counterSlice"
 function IdeaCard() {
     const { catagory, clicksLeft } = useSelector((state: RootState) => state.counter)
     const [idea, setIdea] = useState<Idea | null>(null)
+    const [animate, setAnimate] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -51,13 +52,25 @@ function IdeaCard() {
         getIdea()
     }, [catagory])
 
+    useEffect(() => {
+        if (!idea) return
+
+        setAnimate(true)
+        const timeout = setTimeout(() => setAnimate(false), 700)
+        return () => clearTimeout(timeout)
+    }, [idea])
+
     if (!idea) return null
 
 
     const isDisabled = clicksLeft <= 0
 
     return (
-        <div id="mainIdeaCard">
+        <div
+            id="mainIdeaCard"
+            className={animate ? "premium-coming" : ""}
+            onAnimationEnd={() => setAnimate(false)}
+        >
             <h1>{idea.title}</h1>
 
             <p>{idea.description}</p>
