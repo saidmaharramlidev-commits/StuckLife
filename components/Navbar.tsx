@@ -17,9 +17,9 @@ function Navbar() {
                 <h1 className="navbar-title" onClick={() => dispatch(setStep('home'))}>StuckLife</h1>
 
                 <div className="navbar-endpoints-wrapper">
-                    <Link onClick={() => dispatch(setStep('home'))} className="endpoint" href="/">Home</Link>
-                    <Link onClick={() => dispatch(setStep('howitworks'))} className="endpoint" href="/how-it-works">How it works</Link>
-                    <Link onClick={() => dispatch(setStep('categories'))} className="endpoint" href="/categories">Categories</Link>
+                    <div onClick={() => dispatch(setStep('home'))} className="endpoint" >Home</div>
+                    <div onClick={() => dispatch(setStep('howitworks'))} className="endpoint" >How it works</div>
+                    <div onClick={() => dispatch(setStep('categories'))} className="endpoint" >Categories</div>
                 </div>
 
                 <Link href={'/sign-up'} className="sign-up-btn">
@@ -40,9 +40,18 @@ function Navbar() {
                     <MdClose onClick={() => setOpen(false)} />
                 </div>
 
-                <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-                <Link href="/how-it-works" onClick={() => setOpen(false)}>How it works</Link>
-                <Link href="/categories" onClick={() => setOpen(false)}>Categories</Link>
+                <div onClick={() => {
+                    setOpen(false)
+                    dispatch(setStep('home'))
+                }}>Home</div>
+                <div onClick={() => {
+                    setOpen(false)
+                    dispatch(setStep('howitworks'))
+                }}>How it works</div>
+                <div onClick={() => {
+                    setOpen(false)
+                    dispatch(setStep('categories'))
+                }}>Categories</div>
 
                 <Link href="/sign-up" className="sidebar-btn" onClick={() => setOpen(false)}>
                     Sign Up

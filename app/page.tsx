@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setClicksLeft, setStep } from "@/redux/counterSlice";
 import { RootState } from "@/redux/store";
 import IdeaCard from "@/components/IdeaCard";
+import HowItWorks from "@/components/HowItWorks";
+import Categories from "@/components/Categories";
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -105,6 +107,10 @@ export default function Home() {
 
 
             </div>
+
+
+
+
           </> : ''}
 
 
@@ -116,6 +122,21 @@ export default function Home() {
           </button>
 
 
+
+        </>}
+
+
+        {step === "howitworks" && <>
+          <HowItWorks />
+
+
+
+
+
+        </>}
+
+        {step === "categories" && <>
+          <Categories />
 
         </>}
 
