@@ -2,42 +2,19 @@
 
 import { useEffect, useState } from "react"
 import { ideas, Idea } from "@/data"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
-import { setClicksLeft } from "@/redux/counterSlice"
+import { getClicksLeft, useClick } from "@/utils/clicks"
 
 function IdeaCard() {
-    const { catagory, clicksLeft } = useSelector((state: RootState) => state.counter)
+    const { catagory } = useSelector((state: RootState) => state.counter)
+
     const [idea, setIdea] = useState<Idea | null>(null)
+    const [clicksLeft, setClicksLeft] = useState(3)
     const [animate, setAnimate] = useState(false)
 
-    const dispatch = useDispatch()
-
-
-
-    useEffect(() => {
-        const today = new Date().toDateString()
-        const lastDate = localStorage.getItem("lastDate")
-        const storedClicks = Number(localStorage.getItem("clickCount") || "0")
-
-        if (lastDate !== today) {
-            localStorage.setItem("lastDate", today)
-            localStorage.setItem("clickCount", "0")
-            dispatch(setClicksLeft(3))
-        } else {
-            dispatch(setClicksLeft(3 - storedClicks))
-        }
-    }, [])
-
-    const getIdea = () => {
-        const count = Number(localStorage.getItem("clickCount") || "0")
-
-        if (count >= 3) return
-
-        const newCount = count + 1
-        localStorage.setItem("clickCount", newCount.toString())
-        dispatch(setClicksLeft(3 - newCount))
-
+    // ✅ only generate idea (NO click)
+    const generateIdea = () => {
         let filtered = ideas
 
         if (catagory) {
@@ -48,10 +25,23 @@ function IdeaCard() {
         setIdea(filtered[randomIndex])
     }
 
+    // ✅ initialize
     useEffect(() => {
-        getIdea()
+        setClicksLeft(getClicksLeft())
+        generateIdea() // first idea FREE
     }, [catagory])
 
+    // ✅ next idea (USES click)
+    const handleNextIdea = () => {
+        const success = useClick()
+
+        if (!success) return
+
+        setClicksLeft(getClicksLeft())
+        generateIdea()
+    }
+
+    // animation
     useEffect(() => {
         if (!idea) return
 
@@ -62,36 +52,32 @@ function IdeaCard() {
 
     if (!idea) return null
 
-
     const isDisabled = clicksLeft <= 0
 
     return (
         <div
             id="mainIdeaCard"
             className={animate ? "premium-coming" : ""}
-            onAnimationEnd={() => setAnimate(false)}
         >
             <h1>{idea.title}</h1>
 
             <p>{idea.description}</p>
 
             <div className="idea-info-row">
-
                 <div className="info-pill">
-                    <span className="icon">⏳</span>
+                    <span>⏳</span>
                     <span>{idea.time}</span>
                 </div>
 
                 <div className="info-pill">
-                    <span className="icon">⚡</span>
-                    <span className="capitalize">{idea.difficulty}</span>
+                    <span>⚡</span>
+                    <span>{idea.difficulty}</span>
                 </div>
 
                 <div className="info-pill">
-                    <span className="icon">💰</span>
-                    <span className="capitalize">{idea.cost} cost</span>
+                    <span>💰</span>
+                    <span>{idea.cost} cost</span>
                 </div>
-
             </div>
 
             <div>
@@ -105,7 +91,7 @@ function IdeaCard() {
             </div>
 
             <button
-                onClick={getIdea}
+                onClick={handleNextIdea}
                 disabled={isDisabled}
                 className={isDisabled ? "disabled-btn" : ""}
             >

@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setCatagory, setStep } from '../redux/counterSlice';
-import { RiMoneyDollarCircleLine, RiLightbulbLine, RiUserStarLine, RiGroupLine } from 'react-icons/ri';
-import '../css/categories.css';
+"use client"
+
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setCatagory, setStep } from '../redux/counterSlice'
+import {
+    RiMoneyDollarCircleLine,
+    RiLightbulbLine,
+    RiUserStarLine,
+    RiGroupLine
+} from 'react-icons/ri'
+import '../css/categories.css'
+import { getClicksLeft, useClick } from '@/utils/clicks'
+
+type Category = "money" | "skills" | "self" | "social"
 
 interface CategoryItem {
-    id: string;
-    title: string;
-    description: string;
-    icon: React.ReactNode;
+    id: Category
+    title: string
+    description: string
+    icon: React.ReactNode
 }
 
 const categories: CategoryItem[] = [
@@ -36,31 +46,43 @@ const categories: CategoryItem[] = [
         description: 'Enhance relationships',
         icon: <RiGroupLine size={40} />,
     },
-];
+]
 
 const Categories: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const dispatch = useDispatch();
+    const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
+    const [clicksLeft, setClicksLeft] = useState(3)
 
-    const handleCategoryClick = (categoryId: string) => {
-        setSelectedCategory(categoryId);
-    };
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setClicksLeft(getClicksLeft())
+    }, [])
 
     const handleGetIdea = () => {
-        if (selectedCategory) {
-            dispatch(setCatagory(selectedCategory));
-            dispatch(setStep('card'));
-        }
-    };
+        if (!selectedCategory) return
+
+        const success = useClick()
+        if (!success) return
+
+        setClicksLeft(getClicksLeft())
+
+        dispatch(setCatagory(selectedCategory))
+        dispatch(setStep('card'))
+    }
+
+    const isDisabled = !selectedCategory || clicksLeft <= 0
 
     return (
         <div className="categories-container">
+
+            <h1 className="categories-title">Choose Your Focus</h1>
+
             <div className="categories-grid">
                 {categories.map((category) => (
                     <div
                         key={category.id}
                         className={`category-card ${selectedCategory === category.id ? 'active' : ''}`}
-                        onClick={() => handleCategoryClick(category.id)}
+                        onClick={() => setSelectedCategory(category.id)}
                     >
                         <div className="category-icon">{category.icon}</div>
                         <h3 className="category-title">{category.title}</h3>
@@ -68,15 +90,23 @@ const Categories: React.FC = () => {
                     </div>
                 ))}
             </div>
-            <button
-                className={`get-idea-btn ${selectedCategory ? 'active' : 'disabled'}`}
-                onClick={handleGetIdea}
-                disabled={!selectedCategory}
-            >
-                Get Idea
-            </button>
-        </div>
-    );
-};
 
-export default Categories;
+            <button
+                className={`get-idea-btn ${isDisabled ? 'disabled' : 'active'}`}
+                onClick={handleGetIdea}
+                disabled={isDisabled}
+            >
+                {clicksLeft <= 0 ? "No clicks left" : "Get Idea"}
+            </button>
+
+            <p className="click-left-span">
+                {clicksLeft > 0
+                    ? `${clicksLeft} clicks left today`
+                    : "Come back tomorrow"}
+            </p>
+
+        </div>
+    )
+}
+
+export default Categories

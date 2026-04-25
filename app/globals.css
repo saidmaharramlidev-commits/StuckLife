@@ -55,4 +55,14 @@ body::before {
     height: 100vh;
     border-radius: 0;
   }
+
+  body::before {
+    background-image: none;
+
+
+  }
+
+  body {
+    background: black;
+  }
 }
