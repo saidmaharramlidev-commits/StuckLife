@@ -1,12 +1,15 @@
-'use client';
+'use client'
 
 import type { Metadata } from "next";
+import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
-import '@/css/navbar.css';
-import '@/css/homePage.css';
+import '@/css/categories.css'
+import '@/css/homePage.css'
+import '@/css/howItWorks.css'
 import '@/css/ideaCard.css'
+import '@/css/navbar.css'
 
 const metadata: Metadata = {
   title: "StuckLife",
@@ -18,14 +21,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html
-      lang="en"
-    >
+    <html lang="en">
       <body>
-        <Provider store={store}>
-          {children}
-        </Provider>
+        <ClerkProvider>
+          <Provider store={store}>
+            {children}
+          </Provider>
+        </ClerkProvider>
       </body>
     </html>
   );
