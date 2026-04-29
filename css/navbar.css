@@ -129,10 +129,9 @@
 
 /* Button */
 .sidebar-btn {
-    margin-top: auto;
     padding: 10px;
     text-align: center;
-    background: linear-gradient(90deg, #150142, #2b0a7a);
+    background: linear-gradient(90deg, #2a0a6b, #5a1bd1);
     border-radius: 10px;
 }
 
@@ -158,5 +157,9 @@
         color: white;
         cursor: pointer;
         z-index: 1;
+    }
+
+    .userProfile {
+        display: none;
     }
 }

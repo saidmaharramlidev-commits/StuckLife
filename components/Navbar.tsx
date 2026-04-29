@@ -34,8 +34,10 @@ function Navbar() {
                         <button className="sign-up-btn">Sign Up</button>
                     </SignUpButton>
                 ) : (
-                    <UserButton
-                    />
+                    <div className="userProfile">
+                        <UserButton
+                        />
+                    </div>
                 )}
 
                 <div className="menu-icon" onClick={() => setOpen(true)}>
@@ -60,7 +62,7 @@ function Navbar() {
                         <button className="sidebar-btn">Sign Up</button>
                     </SignUpButton>
                 ) : (
-                    <div className="flex justify-center mt-4">
+                    <div className="flex justify-center mt-4 ">
                         <UserButton />
                     </div>
                 )}
