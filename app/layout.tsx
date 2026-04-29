@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClerkProvider>
+        <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
           <Provider store={store}>
             {children}
           </Provider>
